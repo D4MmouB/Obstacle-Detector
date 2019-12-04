@@ -1,0 +1,40 @@
+int echopin = 2;
+int trigpin = 3;
+int vcc = 4;
+int motorpin = 5;
+
+void setup() {
+  // put your setup code here, to run once:
+
+  pinMode(echopin,INPUT);
+  pinMode(trigpin,OUTPUT);
+  pinMode(vcc,OUTPUT);
+  pinMode(motorpin,OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  int dtime,distance;
+  digitalWrite(vcc,HIGH);
+
+  //triggering sensor
+  digitalWrite(trigpin,LOW);
+  delay(2);
+  digitalWrite(trigpin,HIGH);
+  delay(10);
+  digitalWrite(trigpin,LOW);
+
+  //recieve sensor
+  dtime = pulseIn(echopin,HIGH);
+  distance = dtime * 0.034/2;
+  Serial.print("distance : - ");
+  Serial.println(distance);
+
+  if(distance < 200)
+      digitalWrite(motorpin,HIGH);
+  else
+       digitalWrite(motorpin,LOW);
+
+
+}
